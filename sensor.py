@@ -2,17 +2,12 @@
 import logging
 
 from homeassistant.const import (
-    CONF_ACCESS_TOKEN,
-    ENERGY_KILO_WATT_HOUR,
-    POWER_WATT,
-    DEVICE_CLASS_POWER,
-    TEMP_CELSIUS,
-    DEVICE_CLASS_TEMPERATURE,
+    UnitOfPower,
+    UnitOfTemperature,
     PERCENTAGE,
-    DEVICE_CLASS_HUMIDITY,
     LIGHT_LUX,
-    DEVICE_CLASS_ILLUMINANCE,
 )
+from homeassistant.components.sensor.const import SensorDeviceClass
 from . import DOMAIN, NatureRemoBase, NatureRemoDeviceBase
 
 _LOGGER = logging.getLogger(__name__)
@@ -47,7 +42,7 @@ class NatureRemoE(NatureRemoBase):
 
     def __init__(self, coordinator, appliance):
         super().__init__(coordinator, appliance)
-        self._unit_of_measurement = POWER_WATT
+        self._unit_of_measurement = UnitOfPower.WATT
 
     @property
     def state(self):
@@ -69,7 +64,7 @@ class NatureRemoE(NatureRemoBase):
     @property
     def device_class(self):
         """Return the device class."""
-        return DEVICE_CLASS_POWER
+        return SensorDeviceClass.POWER
 
     async def async_added_to_hass(self):
         """Subscribe to updates."""
@@ -100,7 +95,7 @@ class NatureRemoTemperatureSensor(NatureRemoDeviceBase):
     @property
     def unit_of_measurement(self):
         """Return the unit of measurement of this entity, if any."""
-        return TEMP_CELSIUS
+        return UnitOfTemperature.CELSIUS
 
     @property
     def state(self):
@@ -111,7 +106,7 @@ class NatureRemoTemperatureSensor(NatureRemoDeviceBase):
     @property
     def device_class(self):
         """Return the device class."""
-        return DEVICE_CLASS_TEMPERATURE
+        return SensorDeviceClass.TEMPERATURE
 
 
 class NatureRemoHumiditySensor(NatureRemoDeviceBase):
@@ -140,7 +135,7 @@ class NatureRemoHumiditySensor(NatureRemoDeviceBase):
     @property
     def device_class(self):
         """Return the device class."""
-        return DEVICE_CLASS_HUMIDITY
+        return SensorDeviceClass.HUMIDITY
 
 
 class NatureRemoIlluminanceSensor(NatureRemoDeviceBase):
@@ -169,4 +164,4 @@ class NatureRemoIlluminanceSensor(NatureRemoDeviceBase):
     @property
     def device_class(self):
         """Return the device class."""
-        return DEVICE_CLASS_ILLUMINANCE 
+        return SensorDeviceClass.ILLUMINANCE
